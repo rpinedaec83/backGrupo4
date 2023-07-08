@@ -5,14 +5,14 @@ from .models import Product, Order, CartItem, LineItem
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display =['id', 'name', 'price']
+    list_display = ['id', 'name', 'price']
 
 
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'email', 'date', 'paid']
 
 
-class OrderItemAdmin(admin.ModelAdmin):
+class CartItemAdmin(admin.ModelAdmin):
     list_display = ['id', 'price', 'quantity', 'product']
 
 
@@ -22,5 +22,5 @@ class LineItemAdmin(admin.ModelAdmin):
 
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Order, OrderAdmin)
-admin.site.register(CartItem, OrderItemAdmin)
+admin.site.register(CartItem, CartItemAdmin)
 admin.site.register(LineItem, LineItemAdmin)

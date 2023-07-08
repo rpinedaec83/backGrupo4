@@ -1,6 +1,5 @@
 from .models import CartItem, Product
-from django.shortcuts import get_object_or_404, get_list_or_404
-
+from django.shortcuts import get_object_or_404
 
 def _cart_id(request):
     if 'cart_id' not in request.session:
@@ -15,17 +14,14 @@ def _generate_cart_id():
 
 
 def get_all_cart_items(request):
-    return CartItem.objects.filter(cart_id = _cart_id(request))
+    return CartItem.objects.filter(cart_id=_cart_id(request))
 
 
 def add_item_to_cart(request):
-    # cart_id = _cart_id(request)
-
-    product_id = request.form_data['product_id']
-    quantity = request.form_data['quantity']
+    product_id = request.POST.get('product_id')
+    quantity = request.POST.get('quantity')
 
     p = get_object_or_404(Product, id=product_id)
-
     price = p.price
 
     cart_items = get_all_cart_items(request)
@@ -34,19 +30,18 @@ def add_item_to_cart(request):
 
     for cart_item in cart_items:
         if cart_item.product_id == product_id:
-            cart_item.update_quantity(quantity)
-            # cart_item.save()
+            cart_item.quantity += int(quantity)
+            cart_item.save()
             item_in_cart = True
+            break
 
     if not item_in_cart:
         item = CartItem(
-            cart_id = _cart_id(request),
-            price = price,
-            quantity = quantity,
-            product_id = product_id,
+            cart_id=_cart_id(request),
+            price=price,
+            quantity=int(quantity),
+            product_id=product_id,
         )
-
-        # item.cart_id = cart_id
         item.save()
 
 
@@ -55,9 +50,9 @@ def item_count(request):
 
 
 def subtotal(request):
-    cart_item = get_all_cart_items(request)
+    cart_items = get_all_cart_items(request)
     sub_total = 0
-    for item in cart_item:
+    for item in cart_items:
         sub_total += item.total_cost()
 
     return sub_total
@@ -82,5 +77,3 @@ def update_item(request):
 def clear(request):
     cart_items = get_all_cart_items(request)
     cart_items.delete()
-
-
