@@ -2,6 +2,7 @@ from django.db import models
 
 
 class Product(models.Model):
+    id = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=191)
     price = models.DecimalField(max_digits=7, decimal_places=2)
     slug = models.SlugField()
@@ -13,6 +14,7 @@ class Product(models.Model):
 
 
 class CartItem(models.Model):
+    id = models.BigAutoField(primary_key=True)
     cart_id = models.CharField(max_length=50)
     price = models.DecimalField(max_digits=7, decimal_places=2)
     quantity = models.IntegerField()
@@ -31,6 +33,7 @@ class CartItem(models.Model):
 
 
 class Order(models.Model):
+    id = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=191)
     email = models.EmailField()
     postal_code = models.IntegerField()
@@ -42,10 +45,11 @@ class Order(models.Model):
         return "{}:{}".format(self.id, self.email)
 
     def total_cost(self):
-        return sum([ li.cost() for li in self.lineitem_set.all() ] )
+        return sum([li.cost() for li in self.lineitem_set.all()])
 
 
 class LineItem(models.Model):
+    id = models.BigAutoField(primary_key=True)
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=7, decimal_places=2)
@@ -57,3 +61,9 @@ class LineItem(models.Model):
 
     def cost(self):
         return self.price * self.quantity
+    
+class Compra(models.Model):
+    producto = models.CharField(max_length=100)
+    cantidad = models.IntegerField()
+    precio = models.DecimalField(max_digits=8, decimal_places=2)
+    fecha = models.DateField(auto_now_add=True)
