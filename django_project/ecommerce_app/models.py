@@ -61,3 +61,12 @@ class LineItem(models.Model):
 
     def cost(self):
         return self.price * self.quantity
+<<<<<<< HEAD
+=======
+    
+class Compra(models.Model):
+    producto = models.CharField(max_length=100)
+    cantidad = models.IntegerField()
+    precio = models.DecimalField(max_digits=8, decimal_places=2)
+    fecha = models.DateField(auto_now_add=True)
+>>>>>>> aa7d97c01d047dfcbdfc657835622d4f05caec18

@@ -2,9 +2,18 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+<<<<<<< HEAD
 from .models import Product, Order, LineItem
 from .forms import CartForm, CheckoutForm
 from . import cart
+=======
+from .models import Product, Order, LineItem, Compra
+from .forms import CartForm, CheckoutForm
+from . import cart
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .serializers import CompraSerializer
+>>>>>>> aa7d97c01d047dfcbdfc657835622d4f05caec18
 
 def index(request):
     all_products = Product.objects.all()
@@ -95,3 +104,44 @@ def user_register(request):
 def user_logout(request):
     logout(request)
     return redirect('index')
+<<<<<<< HEAD
+=======
+
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .models import Compra
+from .serializers import CompraSerializer
+
+@api_view(['GET', 'POST'])
+def compra_list_create(request):
+    if request.method == 'GET':
+        compras = Compra.objects.all()
+        serializer = CompraSerializer(compras, many=True)
+        return Response(serializer.data)
+    elif request.method == 'POST':
+        serializer = CompraSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)
+
+@api_view(['GET', 'PUT', 'DELETE'])
+def compra_detail(request, pk):
+    try:
+        compra = Compra.objects.get(pk=pk)
+    except Compra.DoesNotExist:
+        return Response(status=404)
+
+    if request.method == 'GET':
+        serializer = CompraSerializer(compra)
+        return Response(serializer.data)
+    elif request.method == 'PUT':
+        serializer = CompraSerializer(compra, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
+    elif request.method == 'DELETE':
+        compra.delete()
+        return Response(status=204)
+>>>>>>> aa7d97c01d047dfcbdfc657835622d4f05caec18

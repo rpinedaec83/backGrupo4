@@ -78,7 +78,11 @@ WSGI_APPLICATION = 'django_project.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
+<<<<<<< HEAD
         "NAME": "postgres",
+=======
+        "NAME": "prueba4",
+>>>>>>> aa7d97c01d047dfcbdfc657835622d4f05caec18
         "USER": "postgres",
         "PASSWORD": "123",
         "HOST": "127.0.0.1",
@@ -124,8 +128,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
+<<<<<<< HEAD
 DEFAULT_FILE_STORAGE = 'django_project.azure_storage.AzureMediaStorage'
 STATICFILES_STORAGE = 'django_project.azure_storage.AzureStaticStorage'
+=======
+DEFAULT_FILE_STORAGE = 'hackatonFinal.azure_storage.AzureMediaStorage'
+STATICFILES_STORAGE = 'hackatonFinal.azure_storage.AzureStaticStorage'
+>>>>>>> aa7d97c01d047dfcbdfc657835622d4f05caec18
 
 AZURE_ACCOUNT_NAME = os.getenv('AZURE_ACCOUNT_NAME')
 AZURE_ACCOUNT_KEY = os.getenv('AZURE_ACCOUNT_KEY')
@@ -140,3 +149,5 @@ MEDIA_ROOT = BASE_DIR / 'mediafiles'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_URL = '/media/'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

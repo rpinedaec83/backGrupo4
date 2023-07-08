@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<<<<<<< HEAD
     <title>Ecommerce App - Home</title>
 </head>
 <body>
@@ -17,3 +18,18 @@
     <a href="{% url 'logout' %}">Logout</a>
 </body>
 </html>
+=======
+    <title>Ecommerce App - Login</title>
+</head>
+<body>
+    <h1>Login</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+    </form>
+    <a href="{% url 'index' %}">Back to Home</a> |
+    <a href="{% url 'register' %}">Register</a>
+</body>
+</html>
+>>>>>>> aa7d97c01d047dfcbdfc657835622d4f05caec18
